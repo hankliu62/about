@@ -7,7 +7,6 @@ import { message } from "antd";
 import AOS from "aos";
 import classNames from "classnames";
 import { InferGetStaticPropsType } from "next";
-import router from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import SVG from "react-inlinesvg";
@@ -15,10 +14,6 @@ import SVG from "react-inlinesvg";
 import useAsyncEffect from "@/hooks/useAsyncEffect";
 import { fetchChickenSoup } from "@/lib/backend";
 import { getRoutePrefix } from "@/utils/route";
-
-interface IMapProps {
-  className?: string;
-}
 
 /**
  * 关于自己
@@ -476,11 +471,7 @@ export default function Index({
                 className="group/more flex cursor-pointer items-center justify-between gap-2 opacity-70"
                 target="_blank"
                 rel="noreferrer"
-                onClick={() => {
-                  router.push({
-                    pathname: `/articles/649`,
-                  });
-                }}
+                href="https://hankliu62.github.io/frontend/articles/649"
                 aria-hidden
               >
                 <span className="bg-gradient-to-r from-[rgb(255_255_255_/_50%)] to-[rgb(255_255_255_/_50%)] bg-[length:0_1px] bg-[left_100%] bg-no-repeat text-[12px] leading-[18px] transition-all group-hover/more:bg-[length:100%_1px]">
