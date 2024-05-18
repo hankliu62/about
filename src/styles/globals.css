@@ -102,7 +102,9 @@ body > #__next {
 }
 
 .list-article-card.ant-card:hover {
-  box-shadow: 0 2px 12px hsla(0, 25%, 66%, 0.03), 0 8px 12px rgba(0, 0, 0, 0.06),
+  box-shadow:
+    0 2px 12px hsla(0, 25%, 66%, 0.03),
+    0 8px 12px rgba(0, 0, 0, 0.06),
     0 20px 32px rgba(0, 0, 0, 0.06);
 }
 
