@@ -19,7 +19,7 @@ const SectionCode = () => {
           <img
             className="h-[200px] object-contain transition-all"
             alt="技能"
-            src="https://camo.githubusercontent.com/398a919d8c3db20cd92c93c0ae72528218174183f5720244fc3c1be9fdaf3ad1/68747470733a2f2f6769746875622d726561646d652d73746174732e76657263656c2e6170702f6170692f746f702d6c616e67732f3f757365726e616d653d68616e6b6c69753632267468656d653d746f6b796f6e69676874"
+            src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=hankliu62&theme=tokyonight"
           />
         </div>
 
@@ -34,7 +34,7 @@ const SectionCode = () => {
           <img
             className="h-[200px] w-auto object-contain transition-all"
             alt="提交量"
-            src="https://camo.githubusercontent.com/52ef66ed90e7f3a903e1d43b2345b04dac0e5f5442fe5d2ad60346dac018a062/68747470733a2f2f6769746875622d726561646d652d73746174732e76657263656c2e6170702f6170693f757365726e616d653d68616e6b6c697536322673686f775f69636f6e733d74727565267468656d653d746f6b796f6e69676874"
+            src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=hankliu62&theme=tokyonight"
           />
         </div>
       </div>
