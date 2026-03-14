@@ -188,7 +188,7 @@ const SectionPersonality = () => {
                   data-v-415a60a8=""
                   d="M400 0v16L326.316 5 94.736 20 0 0z"
                   fill="#ecf4f7"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 ></path>
               </svg>
             </div>

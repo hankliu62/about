@@ -1,4 +1,3 @@
-import AOS from "aos";
 import classNames from "classnames";
 import { InferGetStaticPropsType } from "next";
 import React, { useEffect, useRef, useState } from "react";
@@ -26,7 +25,6 @@ import { getRoutePrefix } from "@/utils/route";
 export default function Index({
   chickenSoup,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  // useLazyLoadAnimate(".info-card", "fadeInUp");
   // 是否模糊Banner图片
   const [blurBanner, setBlurBanner] = useState<boolean>(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -37,9 +35,15 @@ export default function Index({
 
     if (typeof window !== "undefined") {
       // 客户端特有的逻辑
-      async function getTitleBoundingClientRect(): Promise<DOMRect> {
+      async function getTitleBoundingClientRect(): Promise<DOMRect | null> {
         return new Promise((resolve) => {
           function loopGetBoundingClientRect() {
+            // 添加空值检查
+            if (!titleRef.current) {
+              setTimeout(loopGetBoundingClientRect, 500);
+              return;
+            }
+
             const titleRect = titleRef.current.getBoundingClientRect();
             const titleTop = titleRect.top;
 
@@ -57,6 +61,12 @@ export default function Index({
       }
 
       const titleRect = await getTitleBoundingClientRect();
+
+      // 如果获取不到 titleRect，直接返回
+      if (!titleRect) {
+        return;
+      }
+
       const titleHeight = titleRect.height;
       const titleTop = titleRect.top;
 
@@ -75,7 +85,10 @@ export default function Index({
         }
       );
 
-      observer.observe(contentRef.current);
+      // 添加空值检查
+      if (contentRef.current) {
+        observer.observe(contentRef.current);
+      }
     }
 
     return () => {
@@ -83,180 +96,112 @@ export default function Index({
     };
   }, []);
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
-    <div className="relative w-full bg-black text-white/75">
+    <div className="relative min-h-screen w-full bg-dark-bg text-white/80">
+      {/* Animated gradient background */}
+      <div className="fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute -left-1/2 -top-1/2 h-full w-full animate-blob bg-gradient-conic from-accent-cyan/20 via-transparent to-accent-purple/20 opacity-30" />
+        <div className="animation-delay-2000 absolute -bottom-1/2 -right-1/2 h-full w-full animate-blob bg-gradient-conic from-accent-pink/20 via-transparent to-accent-cyan/20 opacity-30" />
+        <div className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 bg-gradient-radial from-accent-purple/10 to-transparent opacity-50" />
+      </div>
+
+      {/* Banner with glass effect */}
       <header
         className={classNames(
-          "fixed inset-0 mx-auto flex h-[100vh] w-[100vw] animate-[about-banner_3s_cubic-bezier(.6,_.2,_.25,_1),_about-opacity_1.5s_cubic-bezier(.6,_.2,_.25,_1)] px-[48px] transition-all",
+          "fixed inset-0 z-10 flex items-center justify-center px-[48px]",
+          "transition-all duration-700 ease-out",
           {
-            "scale-[1.12] blur-[10px] brightness-75": blurBanner,
+            "scale-105 blur-[3px] brightness-50": blurBanner,
           }
         )}
       >
+        {/* Banner background image with overlay */}
         <div
-          className="absolute left-0 top-0 z-0 h-full w-full bg-[#4d5e8f] bg-current bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 z-0"
           style={{
             backgroundImage: `url(${getRoutePrefix()}/images/index/banner.jpg)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
-        ></div>
-        <h2 className="text-shadow-[0_1px_5px_rgb(0_0_0_/_30%)] relative z-10 flex w-[472px] animate-[about-opacity_1.5s_cubic-bezier(.6,_.2,_.25,_1)_3s_backwards] items-center justify-center font-[about-title] text-[34px] font-normal text-white/70  mix-blend-color-dodge">
-          <p ref={titleRef}>
+        >
+          {/* Gradient overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        </div>
+
+        {/* Floating decorative orbs */}
+        <div className="absolute left-1/4 top-1/4 h-64 w-64 animate-float rounded-full bg-accent-cyan/20 blur-[100px]" />
+        <div className="animation-delay-2000 absolute bottom-1/4 right-1/4 h-80 w-80 animate-float rounded-full bg-accent-purple/20 blur-[120px]" />
+
+        <h2
+          className={classNames(
+            "relative z-20 max-w-3xl text-center",
+            "font-[about-title] text-3xl md:text-4xl lg:text-5xl",
+            "leading-relaxed text-white/90",
+            "transition-all duration-700",
+            "drop-shadow-lg"
+          )}
+        >
+          <span className="gradient-text">
             “在这个瞬息万变的世界里，能够与你相遇，是我最美好的幸运。”
-          </p>
+          </span>
         </h2>
       </header>
 
-      <div className="relative z-20 mx-auto mt-[92vh] w-full max-w-[1920px] px-[24px] pb-[64px] md:px-[48px]">
+      {/* Main content */}
+      <div className="relative z-20 mx-auto mt-[85vh] w-full max-w-[1920px] px-[24px] pb-[64px] md:px-[48px]">
         <div className="flex flex-wrap gap-[24px]" ref={contentRef}>
-          {/* 简介: 带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-duration="500"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(77_224_238_/_50%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] !transition-[all,box-shadow,opacity,transform] !duration-[1s,0.5s,0.5s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(33.33%-16px)]"
-          >
+          {/* 简介: 带有渐变背景色的盒子 - 保留原有动效 */}
+          <div className="gradient-card group flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] md:w-[calc(33.33%-16px)]">
             <SectionMe />
           </div>
 
-          {/* 玄学: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-duration="500"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(255_255_255_/_10%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(33.33%-16px)]"
-          >
+          {/* 玄学: 薄荷绿渐变卡片 */}
+          <div className="gradient-card-mint group flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] md:w-[calc(33.33%-16px)]">
             <SectionDivination />
           </div>
 
-          {/* 身份: 带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-duration="500"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(77_224_238_/_50%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] !transition-[all,box-shadow,opacity,transform] !duration-[1s,0.5s,0.5s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(33.33%-16px)]"
-          >
+          {/* 身份: 柠檬黄渐变卡片 */}
+          <div className="gradient-card-yellow group flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] md:w-[calc(33.33%-16px)]">
             <SectionIdentity />
           </div>
 
-          {/* 事业: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(255_255_255_/_10%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(33.33%-12px)]"
-          >
+          {/* 事业: 红色渐变卡片 - 红红火火 */}
+          <div className="gradient-card-red group flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] md:w-[calc(33.33%-12px)]">
             <SectionOccupation />
           </div>
 
-          {/* 休闲: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card game-card group relative flex min-h-[240px] w-full flex-col content-between justify-between overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(0_0_0_/_30%)] to-[rgb(0_0_0_/_30%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(66.66%-16px)]"
-          >
+          {/* 休闲: 毛玻璃卡片 - 更宽 */}
+          <div className="glass-card card-shine group relative flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between overflow-hidden rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02] md:w-[calc(66.66%-16px)]">
             <SectionGame />
           </div>
 
-          {/* 技术栈: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card group relative flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(255_255_255_/_10%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)]"
-          >
+          {/* 技术栈: 毛玻璃卡片 */}
+          <div className="glass-card card-shine group relative flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02]">
             <SectionCode />
           </div>
 
-          {/* 简介: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card group relative flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-[rgb(66_73_102_/_75%)] p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)]"
-          >
+          {/* 简介: 毛玻璃卡片 */}
+          <div className="glass-card card-shine group relative flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02]">
             <SectionIntroduction />
           </div>
 
-          {/* 性格测试: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card group relative flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(77_224_238_/_20%)] to-[rgb(77_224_238_/_20%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)]"
-          >
+          {/* 性格测试: 毛玻璃卡片 */}
+          <div className="glass-card card-shine group relative flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02]">
             <SectionPersonality />
           </div>
 
-          {/* 每日毒鸡汤: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(255_255_255_/_10%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(50%-12px)]"
-          >
+          {/* 每日毒鸡汤: 毛玻璃卡片 */}
+          <div className="glass-card card-shine flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02] md:w-[calc(50%-12px)]">
             <SectionWord chickenSoup={chickenSoup} />
           </div>
 
-          {/* 每日一图: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card group relative flex min-h-[240px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-gradient-to-br from-[rgb(255_255_255_/_10%)] to-[rgb(255_255_255_/_10%)] bg-[length:200%_200%] bg-center p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:bg-[200%_200%] hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)] md:w-[calc(50%-12px)]"
-          >
+          {/* 每日一图: 毛玻璃卡片 */}
+          <div className="glass-card card-shine group relative flex min-h-[260px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02] md:w-[calc(50%-12px)]">
             <SectionPicture />
           </div>
 
-          {/* 位置: 不带有渐变背景色的盒子 */}
-          <div
-            data-aos="fade-up"
-            data-aos-offset="200"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
-            data-aos-once="true"
-            className="info-card china-map-wrapper group relative flex min-h-[320px] w-full flex-col content-between justify-between gap-[24px] overflow-hidden rounded-[4px] bg-[rgb(66_73_102_/_70%)] p-[24px] shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_10%)] transition-[all,box-shadow] duration-[1s,0.5s] ease-in hover:shadow-[0_5px_24px_0_hsl(0deg_0%_15%_/_3%),_0_0_0_2px_rgb(255_255_255_/_40%)]"
-          >
+          {/* 位置: 毛玻璃卡片 - 更大 */}
+          <div className="glass-card china-map-wrapper group relative flex min-h-[340px] w-full cursor-pointer flex-col content-between justify-between gap-[24px] rounded-2xl p-[24px] transition-all duration-300 hover:scale-[1.02]">
             <SectionLocation />
           </div>
         </div>

@@ -9,19 +9,44 @@ const SectionIdentity = () => {
         <div className="opacity-50">identity</div>
       </h5>
 
-      <div className="word-break max-w-full text-[13px]">
-        就像是一本未完的小说，每一章节都充满了未知与转折。它不仅仅是个人在社会中的定位，更是一种情感、一种历史、一种文化的交织与碰撞。它反映了人的多重面貌，时而明亮如阳光，时而深沉如黑夜。
-      </div>
-
-      <div className="flex items-center justify-between gap-2 truncate">
-        <div className="flex flex-col justify-between gap-1 truncate">
-          <div className="text-[14px]">生活角色</div>
-          <div className="truncate text-[18px]">父母的孩子</div>
+      <div className="fle-start flex flex-1 flex-col">
+        {/* 标签 */}
+        <div className="mb-4 flex flex-wrap gap-2">
+          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-sm">
+            多重面貌
+          </span>
+          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-sm">
+            斜杠青年
+          </span>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between gap-1 truncate md:flex-none">
-          <div className="text-[14px]">社会角色</div>
-          <div className="truncate text-[18px]">程序员 摄影爱好者 Citywalk</div>
+        <div className="word-break z-10 w-full max-w-full">
+          {/* 描述 */}
+          <div className="mb-3 space-y-1 text-[13px] leading-relaxed text-white/70">
+            <div>像一本未完的小说</div>
+            <div>每一章节都充满未知与转折</div>
+            <div>不仅仅是社会定位，更是情感与文化的交织</div>
+            <div>时而明亮如阳光，时而深沉如黑夜</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 详细信息 */}
+      <div className="mt-4 flex items-center justify-between gap-2 border-t border-white/10 pt-3">
+        <div className="flex flex-col justify-between gap-1">
+          <div className="text-[11px] uppercase tracking-wider text-white/40">
+            生活角色
+          </div>
+          <div className="text-[14px] text-white">父母的孩子</div>
+        </div>
+
+        <div className="flex flex-1 flex-col justify-between gap-1 md:flex-none">
+          <div className="text-[11px] uppercase tracking-wider text-white/40">
+            社会角色
+          </div>
+          <div className="truncate text-[14px] text-white">
+            程序员 · 摄影 · Citywalk
+          </div>
         </div>
       </div>
     </>

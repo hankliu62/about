@@ -14,6 +14,264 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================
+   Modern Glassmorphism & Effects
+   ======================================== */
+
+/* Glass card effect */
+@layer components {
+  .glass-card {
+    @apply relative overflow-hidden;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-card::before {
+    content: "";
+
+    @apply pointer-events-none absolute inset-0;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .glass-card:hover::before {
+    opacity: 1;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 12px 48px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(0, 212, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* 带有渐变动画的卡片 - 原来"你好"和"身份"的效果 */
+  .gradient-card {
+    @apply relative overflow-hidden;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(77, 224, 238, 0.5) 100%
+    );
+    background-size: 200% 200%;
+    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 1s ease-in-out;
+  }
+
+  .gradient-card:hover {
+    background-position: 200% 200%;
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.03),
+      0 0 0 2px rgba(255, 255, 255, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* 红色渐变卡片 - 身份卡片 */
+  .gradient-card-red {
+    @apply relative overflow-hidden;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(239, 68, 68, 0.5) 100%
+    );
+    background-size: 200% 200%;
+    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 1s ease-in-out;
+  }
+
+  .gradient-card-red:hover {
+    background-position: 200% 200%;
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.03),
+      0 0 0 2px rgba(255, 255, 255, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* 柠檬黄渐变卡片 - 身份卡片 */
+  .gradient-card-yellow {
+    @apply relative overflow-hidden;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(250, 204, 21, 0.5) 100%
+    );
+    background-size: 200% 200%;
+    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 1s ease-in-out;
+  }
+
+  .gradient-card-yellow:hover {
+    background-position: 200% 200%;
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.03),
+      0 0 0 2px rgba(255, 255, 255, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* 薄荷绿渐变卡片 - 玄学卡片 */
+  .gradient-card-mint {
+    @apply relative overflow-hidden;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(34, 197, 94, 0.5) 100%
+    );
+    background-size: 200% 200%;
+    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 1s ease-in-out;
+  }
+
+  .gradient-card-mint:hover {
+    background-position: 200% 200%;
+    box-shadow:
+      0 5px 24px rgba(0, 0, 0, 0.03),
+      0 0 0 2px rgba(255, 255, 255, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Animated gradient background */
+.animated-bg {
+  background: linear-gradient(
+    -45deg,
+    #0a0a0f,
+    #12121a,
+    #1a1a2e,
+    #12121a,
+    #0a0a0f
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Neon glow effect */
+.neon-glow {
+  text-shadow:
+    0 0 10px rgba(0, 212, 255, 0.5),
+    0 0 20px rgba(0, 212, 255, 0.3),
+    0 0 40px rgba(0, 212, 255, 0.2);
+}
+
+/* Card shine effect on hover */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::after {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.card-shine:hover::after {
+  left: 100%;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00d4ff, #a855f7);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #00d4ff, #ec4899);
+}
+
+/* Animation delays */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

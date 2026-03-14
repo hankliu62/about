@@ -12,8 +12,45 @@ const SectionMe = () => {
         <div className="opacity-50">me</div>
       </h5>
 
-      <div className="word-break max-w-full text-[13px]">
-        关于刘小聪，是一名前端程序员、React陪伴大师、Vue使用达人、Python轻度爱好者、Golang微度使用者、Github提交达人、微信阅读神作研习生、电影观阅人、前爱奇艺会员、最佳熬夜冠军提名。其实它仅仅只是一个名字。
+      <div className="word-break z-10 w-full max-w-full">
+        {/* 标签 */}
+        <div className="mb-4 flex flex-wrap gap-2">
+          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-sm">
+            前端程序员
+          </span>
+          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-sm">
+            代码理想主义者
+          </span>
+        </div>
+
+        {/* 名字 */}
+        <div className="mb-3 flex items-center gap-1">
+          <div className="text-[15px] font-medium leading-relaxed text-white">
+            刘小聪
+          </div>
+
+          <div className="space-y-1 text-[13px] leading-relaxed text-white/70">
+            -
+          </div>
+
+          <div className="space-y-1 text-[13px] leading-relaxed text-white/70">
+            Cursor 提倡者， Claude Code 布道者， Token 挥霍大师
+          </div>
+        </div>
+
+        {/* 描述 */}
+        <div className="mb-3 space-y-1 text-[13px] leading-relaxed text-white/70">
+          <div>
+            React 深度陪伴 · Vue 日常驾驭 · Python 浅尝辄止 · Go 偶有涉猎
+          </div>
+          <div>Github 提交打卡爱好者，微信阅读神作研习生，电影观阅人</div>
+          <div>现爱奇艺黄金会员，前腾讯视频VIP拥有者，最佳熬夜冠军提名</div>
+        </div>
+
+        {/* 彩蛋 */}
+        <div className="mt-4 border-l-2 border-white/20 pl-3 text-[12px] italic text-white/40">
+          其实，它仅仅只是一个名字。
+        </div>
       </div>
 
       <div className="flex h-[48px] items-end justify-between gap-4">
