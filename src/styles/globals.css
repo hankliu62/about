@@ -29,7 +29,6 @@
       rgba(255, 255, 255, 0.02) 100%
     );
     backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.3),
@@ -74,7 +73,6 @@
     );
     background-size: 200% 200%;
     backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
       0 5px 24px rgba(0, 0, 0, 0.1),
@@ -100,7 +98,6 @@
       rgba(239, 68, 68, 0.5) 100%
     );
     background-size: 200% 200%;
-    backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
@@ -128,7 +125,6 @@
     );
     background-size: 200% 200%;
     backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
       0 5px 24px rgba(0, 0, 0, 0.1),
@@ -154,7 +150,6 @@
       rgba(34, 197, 94, 0.5) 100%
     );
     background-size: 200% 200%;
-    backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
@@ -190,8 +185,8 @@
 .gradient-text {
   background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
   background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Neon glow effect */
